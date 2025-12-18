@@ -1,41 +1,20 @@
-# Prerequisites
-*.d
+# Builds
+[Bb]uild
+[Rr]elease
+JuceLibraryCode
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# Windows
+[Tt]humbs.db
 
-# Precompiled Headers
-*.gch
-*.pch
+# macOS
+.DS_Store
+*.DS_Store
+*.swp
+*~
+._*
 
-# Linker files
-*.ilk
-
-# Debugger Files
-*.pdb
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-# debug information files
-*.dwo
+# IDEs
+.vscode
+*.code-workspace
+.vs
+.idea

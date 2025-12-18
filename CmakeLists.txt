@@ -1,0 +1,2 @@
+juce_add_module("value_tree_debugger")
+add_library(vtdbg::vt_debugger ALIAS value_tree_debugger)

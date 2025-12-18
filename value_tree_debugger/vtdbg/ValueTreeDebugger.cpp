@@ -320,8 +320,8 @@ void ValueTreePropertySelection::deselect()
 bool ValueTreePropertySelection::matchesAndIsSelected(juce::ValueTree selectedTree, juce::Identifier selectedPropertyName) const
 {
     return
-        selected and
-        selectedPropertyName == propertyName and
+        selected &&
+        selectedPropertyName == propertyName &&
         selectedTree == tree
     ;
 }
@@ -450,7 +450,7 @@ void DynamicValueView::resized()
 {
     const auto val = value();
 
-    if (val.isInt() or val.isInt64())
+    if (val.isInt() || val.isInt64())
     {
         resizedInt();
     }
@@ -466,7 +466,7 @@ void DynamicValueView::resized()
 
 void DynamicValueView::valueTreePropertyChanged(juce::ValueTree& changedTree, const juce::Identifier& prop)
 {
-    if (tree == changedTree and prop == propertyName)
+    if (tree == changedTree && prop == propertyName)
     {
         setVisibility();
         lbl.setText(value().toString(), NotificationType::dontSendNotification);
@@ -504,7 +504,7 @@ void DynamicValueView::setVisibility()
     butMinus.setVisible(false);
     butToggle.setVisible(false);
 
-    if (val.isInt() or val.isInt64())
+    if (val.isInt() || val.isInt64())
     {
         butPlus.setVisible(true);
         butMinus.setVisible(true);
@@ -526,7 +526,7 @@ void DynamicValueView::setCallbacks()
     butPlus.onClick = [&]()
     {
         jassert(
-            value().isInt() or
+            value().isInt() ||
             value().isInt64()
         );
         setValue(int(value()) + 1);
@@ -534,7 +534,7 @@ void DynamicValueView::setCallbacks()
     butMinus.onClick = [&]()
     {
         jassert(
-            value().isInt() or
+            value().isInt() ||
             value().isInt64()
         );
         setValue(int(value()) - 1);
@@ -636,7 +636,7 @@ void ValueTreePropertyView::paint(juce::Graphics& g)
 
 void ValueTreePropertyView::valueTreePropertyChanged(juce::ValueTree& changedTree, const juce::Identifier& prop)
 {
-    if (tree == changedTree and prop == propertyName)
+    if (tree == changedTree && prop == propertyName)
     {
         propTypeLbl.setText(getTypeOfVar(tree[prop]), NotificationType::dontSendNotification);
     }

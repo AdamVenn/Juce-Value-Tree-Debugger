@@ -214,7 +214,7 @@ public:
     void valueTreeChildRemoved(juce::ValueTree& parentTree, juce::ValueTree& /*childWhichHasBeenRemoved*/, int) override;
     void valueTreeChildOrderChanged(juce::ValueTree& parentTreeWhoseChildrenHaveMoved, int, int) override;
     void valueTreeParentChanged(juce::ValueTree& /*treeWhoseParentHasChanged*/) override;
-    void valueTreeRedirected(juce::ValueTree& treeWhichHasBeenChanged) override;
+    void valueTreeRedirected(juce::ValueTree& /*treeWhichHasBeenChanged*/) override;
 
     void updateSubItems();
     void deselectAll();
@@ -232,7 +232,8 @@ private:
 
 /* Main component which fills the window */
 class ValueTreeDebuggerMain :
-    public juce::Component
+    public juce::Component,
+    public juce::ValueTree::Listener
 {
 public:
     ValueTreeDebuggerMain(juce::UndoManager* undoManager);
@@ -240,8 +241,11 @@ public:
 
     // Component
     void resized() override;
+
+    // Value Tree Listener
+    void valueTreeRedirected(juce::ValueTree& treeWhichHasBeenChanged) override;
     
-    void setTree(juce::ValueTree newTree);
+    void setTree(juce::ValueTree* newTree);
 
 private:
     void setupToolbar();
@@ -251,7 +255,7 @@ private:
     /* The currently selected property */
     ValueTreePropertySelection selectedProperty;
     
-    juce::ValueTree tree;
+    juce::ValueTree* tree;
     juce::UndoManager* um;
     
     juce::TreeView treeView;

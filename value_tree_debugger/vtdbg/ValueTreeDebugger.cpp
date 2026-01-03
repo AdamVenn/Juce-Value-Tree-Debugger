@@ -844,11 +844,12 @@ void Item::valueTreeParentChanged(juce::ValueTree&)
     treeHasChanged();
 }
 
-void Item::valueTreeRedirected(juce::ValueTree& treeWhichHasBeenChanged)
+void Item::valueTreeRedirected(juce::ValueTree&)
 {
-    if (treeWhichHasBeenChanged == tree)
-        updateSubItems();
-
+    // This should be handled by the ValueTreeDebuggerMain
+    jassertfalse;
+    
+    updateSubItems();
     treeHasChanged();
 }
 
@@ -902,18 +903,26 @@ void ValueTreeDebuggerMain::resized()
     treeView.setBounds(bounds);
 }
 
-void ValueTreeDebuggerMain::setTree(juce::ValueTree newTree)
+void ValueTreeDebuggerMain::valueTreeRedirected(juce::ValueTree& treeWhichHasBeenChanged)
 {
-    if (!newTree.isValid())
-    {
-        treeView.setRootItem(nullptr);
-    }
-    else if (tree != newTree)
-    {
-        tree = newTree;
-        rootItem = std::make_unique<Item>(tree, um, selectedProperty);
-        treeView.setRootItem(rootItem.get());
-    }
+    // The address of the value tree does not change, just the shared object the value tree is referencing
+    jassert(tree == &treeWhichHasBeenChanged);
+    setTree(&treeWhichHasBeenChanged);
+}
+
+void ValueTreeDebuggerMain::setTree(juce::ValueTree* newTree)
+{
+    treeView.setRootItem(nullptr);
+    jassert(newTree != nullptr);
+    if (newTree == nullptr) return;
+    
+    tree = newTree;
+    tree->addListener(this);
+    
+    rootItem = std::make_unique<Item>(*tree, um, selectedProperty);
+    treeView.setRootItem(rootItem.get());
+    rootItem->updateSubItems();
+    rootItem->treeHasChanged();
 }
 
 void ValueTreeDebuggerMain::setupToolbar()
@@ -1084,7 +1093,7 @@ ValueTreeDebugger::ValueTreeDebugger(juce::ValueTree& tree, juce::UndoManager* u
 ValueTreeDebugger::~ValueTreeDebugger()
 {
     setLookAndFeel(nullptr);
-    main->setTree(juce::ValueTree());
+    main->setTree(nullptr);
 }
 
 void ValueTreeDebugger::closeButtonPressed()
@@ -1094,7 +1103,7 @@ void ValueTreeDebugger::closeButtonPressed()
 
 void ValueTreeDebugger::setSource(juce::ValueTree& v)
 {
-    main->setTree(v);
+    main->setTree(&v);
 }
 
 void ValueTreeDebugger::construct()

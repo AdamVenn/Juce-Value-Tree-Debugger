@@ -578,7 +578,7 @@ juce::var DynamicValueView::value()
 void DynamicValueView::setValue(const juce::var newValue)
 {
     tree.setProperty(propertyName, newValue, um);
-    um->beginNewTransaction();
+    if (um) um->beginNewTransaction();
 }
 
 // ============================================================================
@@ -812,7 +812,7 @@ inline void Item::itemDropped(const juce::DragAndDropTarget::SourceDetails&, int
     getSelectedTreeViewItems(*getOwnerView(), selectedTrees);
 
     moveItems(*getOwnerView(), selectedTrees, tree, insertIndex, um);
-    um->beginNewTransaction();
+    if (um) um->beginNewTransaction();
 }
 
 void Item::valueTreeChildAdded(juce::ValueTree& parentTree, juce::ValueTree&)
@@ -920,12 +920,12 @@ void ValueTreeDebuggerMain::setupToolbar()
 {
     toolbar.butUndo.onClick = [&]()
     {
-        um->undo();
+        if (um) um->undo();
         rootItem->updateSubItems();
     };
     toolbar.butRedo.onClick = [&]()
     {
-        um->redo();
+        if (um) um->redo();
         rootItem->updateSubItems();
     };
     toolbar.butAddProp.onClick = [&]()
@@ -1001,7 +1001,7 @@ void ValueTreeDebuggerMain::setupToolbar()
                 };
 
                 selectedItem->tree.setProperty(newName, newVal, um);
-                um->beginNewTransaction();
+                if (um) um->beginNewTransaction();
                 selectedItem->comp->createPropertyComponents();
                 selectedItem->treeHasChanged();
             }
@@ -1015,7 +1015,7 @@ void ValueTreeDebuggerMain::setupToolbar()
             if (Identifier::isValidIdentifier(newName))
             {
                 selectedItem->tree.addChild(ValueTree{ newName }, -1, um);
-                um->beginNewTransaction();
+                if (um) um->beginNewTransaction();
                 selectedItem->treeHasChanged();
             }
         }
@@ -1031,7 +1031,7 @@ void ValueTreeDebuggerMain::setupToolbar()
                 if (parent.isValid())
                 {
                     parent.removeChild(item->tree, um);
-                    um->beginNewTransaction();
+                    if (um) um->beginNewTransaction();
                 }
             }
         }
@@ -1039,7 +1039,7 @@ void ValueTreeDebuggerMain::setupToolbar()
     toolbar.butDelProp.onClick = [&]()
     {
         selectedProperty.tree.removeProperty(selectedProperty.propertyName, um);
-        um->beginNewTransaction();
+        if (um) um->beginNewTransaction();
         
         const auto itemIdString = getItemIdString(selectedProperty.tree);
 

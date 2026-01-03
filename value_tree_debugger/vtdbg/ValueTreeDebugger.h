@@ -226,7 +226,7 @@ private:
     juce::UndoManager* um;
     ValueTreePropertySelection& propertySelection;
     juce::Array<juce::Identifier> currentProperties;
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Item);
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Item)
 
 };
 
@@ -257,7 +257,7 @@ private:
     juce::TreeView treeView;
     vtdbg::MiniToolbar toolbar;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ValueTreeDebuggerMain);
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ValueTreeDebuggerMain)
 };
 
 /* Window containing the VT debugger */
@@ -280,7 +280,7 @@ private:
     std::unique_ptr<vtdbg::ValueTreeDebuggerMain> main;
     juce::SharedResourcePointer<vtdbg::ValueTreeDebuggerLookAndFeel> lnf{};
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ValueTreeDebugger);
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ValueTreeDebugger)
 };
 
 } // namespace vtdbg

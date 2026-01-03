@@ -13,8 +13,8 @@ constexpr float toolbarWidthF{ 130.f };
 constexpr int buttonWidth{ 20 };
 
 static juce::Font theFontLarge() { return juce::FontOptions{}.withPointHeight(20.f); }
-static juce::Font theFontSmall() { return juce::FontOptions{}.withPointHeight(11.f); };
-static juce::Font theFontMini() { return juce::FontOptions{}.withPointHeight(10.f); };
+static juce::Font theFontSmall() { return juce::FontOptions{}.withPointHeight(11.f); }
+static juce::Font theFontMini() { return juce::FontOptions{}.withPointHeight(10.f); }
 
 const juce::Colour widgetBackgroundColour{ juce::Colour::fromHSL(240.f / 256.f, 0.05f, 0.10f, 1.f) };
 const juce::Colour outlineColour{ Colour::fromHSL(240.f / 256.f, 0.00f, 0.90f, 1.f) };

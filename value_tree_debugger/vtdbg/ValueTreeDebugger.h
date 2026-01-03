@@ -8,7 +8,7 @@ class ValueTreeDebuggerLookAndFeel : public juce::LookAndFeel_V4
 {
 public:
     ValueTreeDebuggerLookAndFeel();
-    juce::Font getTextButtonFont(juce::TextButton&, int /*buttonHeight*/);
+    juce::Font getTextButtonFont(juce::TextButton&, int /*buttonHeight*/) override;
     juce::Font getPopupMenuFont() override;
     juce::Font getComboBoxFont(juce::ComboBox&) override;
     void drawComboBox(
@@ -63,9 +63,9 @@ class MiniToolbar :
 {
 public:
     MiniToolbar();
-    ~MiniToolbar();
+    ~MiniToolbar() override;
 
-    void resized();
+    void resized() override;
 
     void textEditorTextChanged(juce::TextEditor& textEditor) override;
 
@@ -94,10 +94,10 @@ class DynamicValueView :
 {
 public:
     DynamicValueView(const juce::ValueTree parentOfValue, const juce::Identifier nameOfProperty, juce::UndoManager* undoManager);
-    ~DynamicValueView();
+    ~DynamicValueView() override;
     void resized() override;
 
-    void valueTreePropertyChanged(juce::ValueTree& changedTree, const juce::Identifier& prop);
+    void valueTreePropertyChanged(juce::ValueTree& changedTree, const juce::Identifier& prop) override;
 
     void labelTextChanged(juce::Label* labelThatHasChanged) override;
 
@@ -137,7 +137,7 @@ public:
     void resized() override;
     void paint(juce::Graphics& g) override;
 
-    void valueTreePropertyChanged(juce::ValueTree& changedTree, const juce::Identifier& prop);
+    void valueTreePropertyChanged(juce::ValueTree& changedTree, const juce::Identifier& prop) override;
 
     void changeListenerCallback(juce::ChangeBroadcaster*) override;
 
@@ -162,7 +162,7 @@ class ValueTreeView : public juce::Component
 {
 public:
     ValueTreeView(juce::String componentName, juce::ValueTree tree, Item& parentItem, juce::UndoManager* undoManager, ValueTreePropertySelection& treeviewPropertySelection);
-    ~ValueTreeView();
+    ~ValueTreeView() override;
 
     void resized() override;
     void paint(juce::Graphics& g) override;
@@ -196,7 +196,7 @@ class Item :
 {
 public:
     Item(juce::ValueTree treeToUse, juce::UndoManager* undoManager, ValueTreePropertySelection& treeviewPropertySelection);
-    ~Item();
+    ~Item() override;
 
     // TreeViewItem
     bool mightContainSubItems() override;
@@ -210,11 +210,11 @@ public:
     void itemDropped(const juce::DragAndDropTarget::SourceDetails&, int insertIndex) override;
 
     // Value Tree Listener
-    void valueTreeChildAdded(juce::ValueTree& parentTree, juce::ValueTree& /*childWhichHasBeenAdded*/);
-    void valueTreeChildRemoved(juce::ValueTree& parentTree, juce::ValueTree& /*childWhichHasBeenRemoved*/, int);
-    void valueTreeChildOrderChanged(juce::ValueTree& parentTreeWhoseChildrenHaveMoved, int, int);
-    void valueTreeParentChanged(juce::ValueTree& /*treeWhoseParentHasChanged*/);
-    void valueTreeRedirected(juce::ValueTree& treeWhichHasBeenChanged);
+    void valueTreeChildAdded(juce::ValueTree& parentTree, juce::ValueTree& /*childWhichHasBeenAdded*/) override;
+    void valueTreeChildRemoved(juce::ValueTree& parentTree, juce::ValueTree& /*childWhichHasBeenRemoved*/, int) override;
+    void valueTreeChildOrderChanged(juce::ValueTree& parentTreeWhoseChildrenHaveMoved, int, int) override;
+    void valueTreeParentChanged(juce::ValueTree& /*treeWhoseParentHasChanged*/) override;
+    void valueTreeRedirected(juce::ValueTree& treeWhichHasBeenChanged) override;
 
     void updateSubItems();
     void deselectAll();
@@ -236,7 +236,7 @@ class ValueTreeDebuggerMain :
 {
 public:
     ValueTreeDebuggerMain(juce::UndoManager* undoManager);
-    ~ValueTreeDebuggerMain();
+    ~ValueTreeDebuggerMain() override;
 
     // Component
     void resized() override;
@@ -268,7 +268,7 @@ class ValueTreeDebugger :
 public:
     ValueTreeDebugger();
     ValueTreeDebugger(juce::ValueTree& tree, juce::UndoManager* undoManager);
-    ~ValueTreeDebugger();
+    ~ValueTreeDebugger() override;
 
     void closeButtonPressed() override;
     

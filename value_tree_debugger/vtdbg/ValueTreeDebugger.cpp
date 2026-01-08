@@ -1072,6 +1072,8 @@ ValueTreeDebugger::ValueTreeDebugger() :
         DocumentWindow::allButtons
     )
 {
+    setLookAndFeel(lnf);
+    setBackgroundColour(lnf->getCurrentColourScheme().getUIColour(LookAndFeel_V4::ColourScheme::windowBackground));
     main = std::make_unique<vtdbg::ValueTreeDebuggerMain>(nullptr);
     construct();
 }
@@ -1108,7 +1110,6 @@ void ValueTreeDebugger::setSource(juce::ValueTree& v)
 
 void ValueTreeDebugger::construct()
 {
-    
     setContentNonOwned(main.get(), true);
     setResizable(true, false);
     setResizeLimits(200, 100, 1920, 1080);

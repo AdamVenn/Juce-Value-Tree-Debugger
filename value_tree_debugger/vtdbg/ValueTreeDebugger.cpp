@@ -913,7 +913,6 @@ void ValueTreeDebuggerMain::valueTreeRedirected(juce::ValueTree& treeWhichHasBee
 void ValueTreeDebuggerMain::setTree(juce::ValueTree* newTree)
 {
     treeView.setRootItem(nullptr);
-    jassert(newTree != nullptr);
     if (newTree == nullptr) return;
     
     tree = newTree;
